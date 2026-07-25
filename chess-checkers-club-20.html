@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ԱԿՈՒՄԲ">
+<meta name="theme-color" content="#0e1f18">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230e1f18'/%3E%3Ccircle cx='50' cy='50' r='34' fill='none' stroke='%23c9a86a' stroke-width='4'/%3E%3Ctext x='50' y='62' font-size='40' text-anchor='middle' fill='%23e4cd97' font-family='Georgia,serif'%3E♞%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230e1f18'/%3E%3Ccircle cx='50' cy='50' r='34' fill='none' stroke='%23c9a86a' stroke-width='4'/%3E%3Ctext x='50' y='62' font-size='40' text-anchor='middle' fill='%23e4cd97' font-family='Georgia,serif'%3E♞%3C/text%3E%3C/svg%3E">
+<title>ԱԿՈՒՄԲ — Շախմատ և Շաշկի</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --felt-900:#0e1f18;
+    --felt-800:#153529;
+    --felt-700:#1d4636;
+    --brass:#c9a86a;
+    --brass-light:#e4cd97;
+    --ivory:#f2ede0;
+    --ivory-dim:#cfc9ba;
+    --wager:#a1443a;
+    --wager-light:#d97a6c;
+    --win:#5f9e77;
+    --line:rgba(201,168,106,0.25);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    min-height:100vh;
+    background:
+      radial-gradient(1200px 600px at 50% -10%, var(--felt-700), var(--felt-900) 60%);
+    color:var(--ivory);
+    font-family:'Inter',sans-serif;
+    padding-bottom:60px;
+  }
+  .wrap{max-width:520px;margin:0 auto;padding:20px 16px 40px;}
+  .brand{
+    text-align:center;
+    padding:22px 0 18px;
+    border-bottom:1px solid var(--line);
+    margin-bottom:22px;
+  }
+  .brand .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:.28em;
+    color:var(--brass);
+    text-transform:uppercase;
+  }
+  .brand h1{
+    font-family:'Playfair Display',serif;
+    font-size:32px;
+    margin:6px 0 4px;
+    font-weight:800;
+    letter-spacing:.01em;
+    color:var(--ivory);
+  }
+  .brand .sub{
+    font-size:12.5px;
+    color:var(--ivory-dim);
+  }
+  .card{
+    background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:18px;
+    margin-bottom:16px;
+  }
+  .card h2{
+    font-family:'Playfair Display',serif;
+    font-size:19px;
+    margin:0 0 12px;
+    font-weight:700;
+    color:var(--brass-light);
+  }
+  label{
+    display:block;
+    font-size:11.5px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--ivory-dim);
+    margin-bottom:6px;
+  }
+  input, select{
+    width:100%;
+    background:var(--felt-900);
+    border:1px solid var(--line);
+    color:var(--ivory);
+    padding:11px 12px;
+    border-radius:9px;
+    font-size:15px;
+    font-family:'Inter',sans-serif;
+    margin-bottom:14px;
+  }
+  input:focus, select:focus, button:focus-visible{
+    outline:2px solid var(--brass);
+    outline-offset:1px;
+  }
+  button{
+    cursor:pointer;
+    border:none;
+    border-radius:9px;
+    padding:11px 16px;
+    font-size:14.5px;
+    font-weight:600;
+    font-family:'Inter',sans-serif;
+    transition:transform .08s ease, filter .12s ease;
+  }
+  button:active{transform:scale(0.97);}
+  .btn-primary{
+    background:linear-gradient(180deg, var(--brass-light), var(--brass));
+    color:var(--felt-900);
+    width:100%;
+  }
+  .btn-primary:hover{filter:brightness(1.06);}
+  .btn-ghost{
+    background:transparent;
+    border:1px solid var(--line);
+    color:var(--ivory);
+  }
+  .btn-danger{
+    background:transparent;
+    border:1px solid var(--wager);
+    color:var(--wager-light);
+  }
+  .btn-small{padding:7px 12px;font-size:13px;border-radius:7px;}
+  .row{display:flex;gap:10px;}
+  .row > *{flex:1;}
+  .error{
+    background:rgba(161,68,58,0.15);
+    border:1px solid var(--wager);
+    color:var(--wager-light);
+    padding:10px 12px;
+    border-radius:9px;
+    font-size:13.5px;
+    margin-bottom:14px;
+  }
+  .notice{
+    background:rgba(95,158,119,0.12);
+    border:1px solid var(--win);
+    color:#bfe6cd;
+    padding:10px 12px;
+    border-radius:9px;
+    font-size:13.5px;
+    margin-bottom:14px;
+  }
+  .balance{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    padding:14px 16px;
+    background:var(--felt-900);
+    border:1px solid var(--brass);
+    border-radius:12px;
+    margin-bottom:16px;
+  }
+  .balance .name{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;}
+  .balance .points{font-family:'IBM Plex Mono',monospace;font-size:22px;color:var(--brass-light);font-weight:600;}
+  .balance .points span{font-size:12px;color:var(--ivory-dim);margin-left:4px;}
+  .list-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:11px 4px;
+    border-bottom:1px solid var(--line);
+    font-size:14.5px;
+  }
+  .list-item:last-child{border-bottom:none;}
+  .tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    padding:3px 8px;
+    border-radius:20px;
+    background:rgba(201,168,106,0.15);
+    color:var(--brass-light);
+  }
+  .tag.wager{background:rgba(161,68,58,0.2);color:var(--wager-light);}
+  .muted{color:var(--ivory-dim);font-size:12.5px;}
+  .code-display{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:20px;
+    letter-spacing:.12em;
+    background:var(--felt-900);
+    border:1px dashed var(--brass);
+    color:var(--brass-light);
+    padding:12px;
+    text-align:center;
+    border-radius:9px;
+    margin-bottom:10px;
+  }
+  .tabs{display:flex;gap:6px;margin-bottom:16px;}
+  .tab{
+    flex:1;
+    text-align:center;
+    padding:9px 4px;
+    font-size:12.5px;
+    font-weight:600;
+    border-radius:9px;
+    background:transparent;
+    color:var(--ivory-dim);
+    border:1px solid var(--line);
+  }
+  .tab.active{
+    background:rgba(201,168,106,0.15);
+    color:var(--brass-light);
+    border-color:var(--brass);
+  }
+  .empty{
+    text-align:center;
+    padding:24px 10px;
+    color:var(--ivory-dim);
+    font-size:13.5px;
+  }
+  /* board */
+  .board-wrap{display:flex;flex-direction:column;align-items:center;margin:6px 0 14px;}
+  .board{
+    display:grid;
+    grid-template-columns:repeat(8,1fr);
+    width:min(94vw,420px);
+    aspect-ratio:1/1;
+    border:3px solid var(--brass);
+    border-radius:6px;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,0.4);
+  }
+  .sq{
+    display:flex;align-items:center;justify-content:center;
+    font-size:min(7vw,30px);
+    position:relative;
+    user-select:none;
+  }
+  .sq.light{background:#e9dcbd;}
+  .sq.dark{background:#7a5a3a;}
+  .sq.sel{outline:3px solid var(--brass-light); outline-offset:-3px; z-index:2;}
+  .sq.hint::after{
+    content:'';
+    position:absolute;
+    width:26%;height:26%;
+    border-radius:50%;
+    background:rgba(201,168,106,0.75);
+  }
+  .sq.hintcap::after{
+    content:'';
+    position:absolute;
+    inset:6%;
+    border:4px solid rgba(161,68,58,0.75);
+    border-radius:50%;
+    background:transparent;
+  }
+  .pc-w{color:#fefefe;text-shadow:0 1px 2px rgba(0,0,0,0.6);}
+  .pc-b{color:#1a1a1a;text-shadow:0 1px 1px rgba(255,255,255,0.25);}
+  .checker-piece{
+    width:74%;height:74%;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:min(4.5vw,18px);
+    box-shadow:inset 0 2px 4px rgba(255,255,255,0.25), 0 2px 4px rgba(0,0,0,0.5);
+  }
+  .checker-piece.red{background:radial-gradient(circle at 35% 30%, #d97a6c, #7f261c);}
+  .checker-piece.black{background:radial-gradient(circle at 35% 30%, #4a4a4a, #0c0c0c);}
+  .turn-banner{
+    text-align:center;
+    font-family:'Playfair Display',serif;
+    font-size:16px;
+    margin-bottom:10px;
+    color:var(--brass-light);
+  }
+  .link-btn{
+    background:none;border:none;color:var(--brass-light);
+    font-size:12.5px;text-decoration:underline;padding:0;cursor:pointer;
+  }
+  footer{
+    text-align:center;
+    font-size:11px;
+    color:var(--ivory-dim);
+    margin-top:10px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+const ADMIN_CODE = "ARBITER-2026";
+let appData = { users: [], challenges: [], games: {}, history: [] };
+let currentUser = null;
+let currentGameId = null;
+let selected = null;
+let mustContinueFrom = null;
+let loaded = false;
+let pollTimer = null;
+
+// ---------- storage (Firebase Realtime Database) ----------
+const FIREBASE_DB_URL = "https://akumb-1dc5a-default-rtdb.firebaseio.com";
+let storageOk = true;
+async function fetchWithTimeout(url, options, ms){
+  const controller = new AbortController();
+  const timer = setTimeout(()=>controller.abort(), ms || 6000);
+  try{
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+  }
+}
+async function loadData(isInitial){
+  try{
+    const res = await fetchWithTimeout(`${FIREBASE_DB_URL}/app-data.json`, {}, 6000);
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const data = await res.json();
+    if(data){ appData = data; }
+    else if(isInitial){
+      appData = { users: [], challenges: [], games: {}, history: [] };
+      await saveData();
+    }
+    storageOk = true;
+  }catch(e){
+    console.error('Բեռնման սխալ (ժամանակավոր)', e);
+    storageOk = false;
+    if(isInitial && !loaded){
+      appData = appData || { users: [], challenges: [], games: {}, history: [] };
+    }
+    // on later (poll) failures we deliberately keep the existing local appData untouched
+  }
+  loaded = true;
+}
+async function saveData(){
+  try{
+    const res = await fetchWithTimeout(`${FIREBASE_DB_URL}/app-data.json`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(appData)
+    }, 8000);
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    storageOk = true;
+  }catch(e){
+    console.error('Պահպանման սխալ (ժամանակավոր)', e);
+    storageOk = false;
+  }
+}
+function genCode(len){
+  const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let s='';
+  for(let i=0;i<len;i++) s+=chars[Math.floor(Math.random()*chars.length)];
+  return s;
+}
+function genId(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
+
+// ---------- i18n ----------
+let lang = 'hy';
+const LANGS = [
+  {code:'hy',label:'Հայերեն'},
+  {code:'en',label:'English'},
+  {code:'ru',label:'Русский'},
+  {code:'fr',label:'Français'},
+  {code:'tr',label:'Türkçe'},
+  {code:'fa',label:'فارسی'},
+  {code:'ka',label:'ქართული'},
+  {code:'az',label:'Azərbaycan'},
+  {code:'uz',label:'O‘zbek'}
+];
+const T = {
+hy:{ clubWord:'ԱԿՈՒՄԲ', eyebrow:'Chess & Checkers Club', loginSub:'Մուտք գործիր քո անհատական կոդով', registerSub:'Ստեղծիր նոր հաշիվ', tabLogin:'Մուտք', tabRegister:'Գրանցվել', loginHeading:'Մուտք', connIssue:'Կապի ժամանակավոր խնդիր կա։', retryConn:'Ստուգել կապը կրկին', loginCodeLabel:'Մուտքի կոդ', loginCodePh:'օր.՝ K7X29Q', loginBtn:'Մուտք', noAccountFooter:'Հաշիվ չունե՞ս․ սեղմիր «Գրանցվել»', registerHeading:'Նոր հաշվի գրանցում', nameLabel:'Անուն', namePh:'քո անունը', emailLabel:'Email', age18Label:'Հաստատում եմ, որ 18 տարեկան կամ ավելի եմ', registerBtn:'Ստեղծել հաշիվ', registerFooter:'Հաշիվը կստեղծվի 0 միավորով. ադմինը կավելացնի միավոր, նախքան դու կխաղաս խաղադրույքով', errName:'Մուտքագրիր անունդ։', errEmail:'Մուտքագրիր վավեր email հասցե։', errAge18:'Գրանցումը հասանելի է միայն 18+ տարեկան անձանց համար. նշիր հաստատման վանդակը։', errEmailTaken:'Այս email-ով հաշիվ արդեն գրանցված է։', regSuccess:(n,c)=>`Հաշիվը ստեղծված է, ${n}։ Քո մուտքի կոդն է՝ ${c} — պահիր այն, հետո մուտք գործիր դրանով։`, errCode:'Մուտքագրիր կոդը։', errCodeNotFound:'Այս կոդով հաշիվ չի գտնվել։', adminName:'Ադմին', adminEyebrow:'Ադմին', adminTitle:'Կառավարում', connStatusH:'Կապի վիճակ', connStatusWarn:'Կապը սերվերի հետ ներկայում խնդրահարույց է։ Այս վիճակում ստեղծված հաշիվները կարող են չպահպանվել/չհամաժամացվել այլ սարքերի հետ։', createAcctH:'Նոր հաշիվ ստեղծել', playerNameLabel:'Խաղացողի անուն', playerNamePh:'օր.՝ Հասմիկ', startPointsLabel:'Սկզբնական միավոր (աչոկ)', createAcctBtn:'Ստեղծել հաշիվ', accountsH:(n)=>`Հաշիվներ (${n})`, noAccounts:'Դեռ հաշիվներ չկան', codeLabel:'կոդ', editBtn:'Փոփոխել', historyH:'Խաղերի պատմություն', noGames:'Դեռ խաղեր չեն ավարտվել', draw:'Ոչ-ոքի', wonPrefix:'Հաղթեց՝ ', logoutBtn:'Դուրս գալ', acctConfirmed:(n,c)=>`✅ Հաշիվը ստեղծված ու հաստատված է պահպանված։ ${n}-ի կոդն է՝ ${c} — փոխանցիր իրեն։`, acctUnconfirmed:'⚠️ Հաշիվը տեղում ստեղծվեց, բայց չհաստատվեց սերվերում։ Սեղմիր «Ստուգել կապը» և փորձիր կրկին ստեղծել, հակառակ դեպքում խաղացողը այս կոդով մուտք գործել չի կարողանա։', acctFailed:'⚠️ Կապի խնդրի պատճառով հաշիվը հավանաբար ՉԻ պահպանվել։ Սեղմիր «Ստուգել կապը» կոճակը մի պահից և փորձիր կրկին։', adjustPrompt:(n,p)=>`${n}-ի նոր միավորը (հիմա՝ ${p})`, tabPlay:'Խաղալ', tabRequests:'Հրավերներ', tabHistory:'Պատմություն', currentGamesH:'Ընթացիկ խաղեր', openBtn:'Բացել', openChallengesH:'Բաց հրավերներ', zeroPtsWarn:'Քո հաշվին 0 աչոկ է։ Դիմիր ադմինին, մինչև խաղադրույքով խաղալ կարողանաս։', yourInvite:'Քո հրավերը', waitingPlayer:'սպասում է խաղացողի', cancelBtn:'Չեղարկել', noOtherOpen:'Ուրիշ բաց հրավերներ դեռ չկան', playBtn:'Խաղալ', createOpenBtn:'+ Ստեղծել բաց հրավեր', gameTypeLabel:'Խաղի տեսակ', chess:'Շախմատ', checkers:'Շաշկի', wagerLabel:'Խաղադրույք (աչոկ)', wagerLabelEach:'Խաղադրույք (աչոկ, յուրաքանչյուրից)', publishBtn:'Հրապարակել հրավերը', challengeSpecificH:'Հրավիրել կոնկրետ խաղացողի', noOtherAccounts:'Ուրիշ հաշիվներ դեռ չկան', zeroPtsCantPlay:'0 աչոկ · չի կարող խաղալ', inviteBtn:'Հրավիրել', sendInviteBtn:(n)=>`Ուղարկել հրավեր ${n}-ին`, errValidWager:'Մուտքագրիր վավեր խաղադրույք։', errNotEnough:'Քո միավորները բավարար չեն այս խաղադրույքի համար։', errOppNotEnough:(n)=>`${n}-ը բավարար միավոր չունի։`, errInviteGone:'Այս հրավերն այլևս հասանելի չէ։', errWagerBoth:'Խաղադրույքի համար բավարար միավոր չկա (քո կամ մյուս խաղացողի)։', receivedInvitesH:'Ստացված հրավերներ', noInvites:'Հրավերներ չկան', acceptBtn:'Ընդունել', declineBtn:'Մերժել', sentInvitesH:'Ուղարկված հրավերներ', noPendingInvites:'Չկան սպասող հրավերներ', pendingLabel:'սպասման մեջ', myGamesH:'Իմ խաղերը', noFinishedGames:'Դեռ ավարտված խաղեր չկան', vs:'vs', gameOverH:'Խաղն ավարտված է', wagerReturned:'Խաղադրույքը վերադարձված է։', ptsTransferred:(w)=>`${w} աչոկ փոխանցվեց`, returnBtn:'Վերադառնալ', yourTurn:'Քո հերթն է', oppTurn:(n)=>`${n}-ի հերթն է`, closeGameBtn:'Փակել (խաղը շարունակվում է)', langLabel:'Լեզու', points:'աչոկ' },
+en:{ clubWord:'CLUB', eyebrow:'Chess & Checkers Club', loginSub:'Sign in with your personal code', registerSub:'Create a new account', tabLogin:'Log in', tabRegister:'Sign up', loginHeading:'Log in', connIssue:'There is a temporary connection issue.', retryConn:'Retry connection', loginCodeLabel:'Login code', loginCodePh:'e.g. K7X29Q', loginBtn:'Log in', noAccountFooter:"No account? Tap “Sign up”", registerHeading:'Create a new account', nameLabel:'Name', namePh:'your name', emailLabel:'Email', age18Label:'I confirm I am 18 years or older', registerBtn:'Create account', registerFooter:'The account starts with 0 points — the admin must add points before you can play for a wager', errName:'Enter your name.', errEmail:'Enter a valid email address.', errAge18:'Sign-up is only available to people 18+. Please check the confirmation box.', errEmailTaken:'An account with this email already exists.', regSuccess:(n,c)=>`Account created, ${n}. Your login code is ${c} — save it, then log in with it.`, errCode:'Enter your code.', errCodeNotFound:'No account found with this code.', adminName:'Admin', adminEyebrow:'Admin', adminTitle:'Management', connStatusH:'Connection status', connStatusWarn:'The connection to the server is currently unstable. Accounts created now may not save or sync to other devices.', createAcctH:'Create new account', playerNameLabel:'Player name', playerNamePh:'e.g. Hasmik', startPointsLabel:'Starting points (chips)', createAcctBtn:'Create account', accountsH:(n)=>`Accounts (${n})`, noAccounts:'No accounts yet', codeLabel:'code', editBtn:'Edit', historyH:'Game history', noGames:'No games finished yet', draw:'Draw', wonPrefix:'Won: ', logoutBtn:'Log out', acctConfirmed:(n,c)=>`✅ Account created and confirmed saved. ${n}'s code is ${c} — pass it on.`, acctUnconfirmed:'⚠️ The account was created locally but not confirmed on the server. Tap "Check connection" and try creating it again, otherwise the player won\'t be able to log in with this code.', acctFailed:'⚠️ Due to a connection issue the account probably was NOT saved. Tap "Check connection" in a moment and try again.', adjustPrompt:(n,p)=>`${n}'s new points balance (currently ${p})`, tabPlay:'Play', tabRequests:'Invites', tabHistory:'History', currentGamesH:'Ongoing games', openBtn:'Open', openChallengesH:'Open challenges', zeroPtsWarn:'Your balance is 0 chips. Ask the admin before you can play for a wager.', yourInvite:'Your challenge', waitingPlayer:'waiting for a player', cancelBtn:'Cancel', noOtherOpen:'No other open challenges yet', playBtn:'Play', createOpenBtn:'+ Create open challenge', gameTypeLabel:'Game type', chess:'Chess', checkers:'Checkers', wagerLabel:'Wager (chips)', wagerLabelEach:'Wager (chips, each)', publishBtn:'Post challenge', challengeSpecificH:'Challenge a specific player', noOtherAccounts:'No other accounts yet', zeroPtsCantPlay:'0 chips · cannot play', inviteBtn:'Challenge', sendInviteBtn:(n)=>`Send challenge to ${n}`, errValidWager:'Enter a valid wager.', errNotEnough:'You don\'t have enough points for this wager.', errOppNotEnough:(n)=>`${n} doesn't have enough points.`, errInviteGone:'This challenge is no longer available.', errWagerBoth:"There aren't enough points for this wager (yours or the other player's).", receivedInvitesH:'Received invites', noInvites:'No invites', acceptBtn:'Accept', declineBtn:'Decline', sentInvitesH:'Sent invites', noPendingInvites:'No pending invites', pendingLabel:'pending', myGamesH:'My games', noFinishedGames:'No finished games yet', vs:'vs', gameOverH:'Game over', wagerReturned:'The wager was returned.', ptsTransferred:(w)=>`${w} chips transferred`, returnBtn:'Back', yourTurn:"It's your turn", oppTurn:(n)=>`${n}'s turn`, closeGameBtn:'Close (game continues)', langLabel:'Language', points:'chips' },
+ru:{ clubWord:'КЛУБ', eyebrow:'Chess & Checkers Club', loginSub:'Войдите по своему личному коду', registerSub:'Создать новый аккаунт', tabLogin:'Вход', tabRegister:'Регистрация', loginHeading:'Вход', connIssue:'Временная проблема с подключением.', retryConn:'Проверить соединение', loginCodeLabel:'Код входа', loginCodePh:'напр.: K7X29Q', loginBtn:'Войти', noAccountFooter:'Нет аккаунта? Нажмите «Регистрация»', registerHeading:'Регистрация нового аккаунта', nameLabel:'Имя', namePh:'ваше имя', emailLabel:'Email', age18Label:'Подтверждаю, что мне есть 18 лет', registerBtn:'Создать аккаунт', registerFooter:'Аккаунт создаётся с 0 очков — админ должен добавить очки, прежде чем вы сможете играть на ставку', errName:'Введите имя.', errEmail:'Введите корректный email.', errAge18:'Регистрация доступна только лицам 18+. Отметьте галочку подтверждения.', errEmailTaken:'Аккаунт с этим email уже зарегистрирован.', regSuccess:(n,c)=>`Аккаунт создан, ${n}. Ваш код входа: ${c} — сохраните его и войдите с ним.`, errCode:'Введите код.', errCodeNotFound:'Аккаунт с этим кодом не найден.', adminName:'Админ', adminEyebrow:'Админ', adminTitle:'Управление', connStatusH:'Статус соединения', connStatusWarn:'Соединение с сервером сейчас нестабильно. Созданные сейчас аккаунты могут не сохраниться/не синхронизироваться на других устройствах.', createAcctH:'Создать новый аккаунт', playerNameLabel:'Имя игрока', playerNamePh:'напр.: Асмик', startPointsLabel:'Начальные очки (фишки)', createAcctBtn:'Создать аккаунт', accountsH:(n)=>`Аккаунты (${n})`, noAccounts:'Пока нет аккаунтов', codeLabel:'код', editBtn:'Изменить', historyH:'История игр', noGames:'Игры пока не завершены', draw:'Ничья', wonPrefix:'Победил: ', logoutBtn:'Выйти', acctConfirmed:(n,c)=>`✅ Аккаунт создан и подтверждён. Код ${n}: ${c} — передайте его игроку.`, acctUnconfirmed:'⚠️ Аккаунт создан локально, но не подтверждён на сервере. Нажмите «Проверить соединение» и попробуйте снова, иначе игрок не сможет войти с этим кодом.', acctFailed:'⚠️ Из-за проблемы с соединением аккаунт, вероятно, НЕ сохранился. Нажмите «Проверить соединение» через момент и попробуйте снова.', adjustPrompt:(n,p)=>`Новый баланс ${n} (сейчас: ${p})`, tabPlay:'Играть', tabRequests:'Приглашения', tabHistory:'История', currentGamesH:'Текущие игры', openBtn:'Открыть', openChallengesH:'Открытые вызовы', zeroPtsWarn:'На вашем счету 0 фишек. Обратитесь к админу, прежде чем играть на ставку.', yourInvite:'Ваш вызов', waitingPlayer:'ожидает игрока', cancelBtn:'Отменить', noOtherOpen:'Других открытых вызовов пока нет', playBtn:'Играть', createOpenBtn:'+ Создать открытый вызов', gameTypeLabel:'Тип игры', chess:'Шахматы', checkers:'Шашки', wagerLabel:'Ставка (фишки)', wagerLabelEach:'Ставка (фишки, с каждого)', publishBtn:'Опубликовать вызов', challengeSpecificH:'Вызвать конкретного игрока', noOtherAccounts:'Других аккаунтов пока нет', zeroPtsCantPlay:'0 фишек · не может играть', inviteBtn:'Вызвать', sendInviteBtn:(n)=>`Отправить вызов ${n}`, errValidWager:'Введите корректную ставку.', errNotEnough:'У вас недостаточно очков для этой ставки.', errOppNotEnough:(n)=>`У ${n} недостаточно очков.`, errInviteGone:'Этот вызов больше недоступен.', errWagerBoth:'Недостаточно очков для этой ставки (у вас или у другого игрока).', receivedInvitesH:'Полученные приглашения', noInvites:'Приглашений нет', acceptBtn:'Принять', declineBtn:'Отклонить', sentInvitesH:'Отправленные приглашения', noPendingInvites:'Нет ожидающих приглашений', pendingLabel:'в ожидании', myGamesH:'Мои игры', noFinishedGames:'Пока нет завершённых игр', vs:'vs', gameOverH:'Игра завершена', wagerReturned:'Ставка возвращена.', ptsTransferred:(w)=>`Передано ${w} фишек`, returnBtn:'Назад', yourTurn:'Ваш ход', oppTurn:(n)=>`Ход игрока ${n}`, closeGameBtn:'Закрыть (игра продолжается)', langLabel:'Язык', points:'фишек' },
+fr:{ clubWord:'CLUB', eyebrow:'Chess & Checkers Club', loginSub:'Connectez-vous avec votre code personnel', registerSub:'Créer un nouveau compte', tabLogin:'Connexion', tabRegister:'Inscription', loginHeading:'Connexion', connIssue:'Problème de connexion temporaire.', retryConn:'Réessayer la connexion', loginCodeLabel:'Code de connexion', loginCodePh:'ex. : K7X29Q', loginBtn:'Connexion', noAccountFooter:'Pas de compte ? Appuyez sur « Inscription »', registerHeading:'Créer un nouveau compte', nameLabel:'Nom', namePh:'votre nom', emailLabel:'Email', age18Label:"Je confirme avoir 18 ans ou plus", registerBtn:'Créer le compte', registerFooter:"Le compte démarre avec 0 point — l'admin doit ajouter des points avant de pouvoir jouer avec mise", errName:'Entrez votre nom.', errEmail:'Entrez une adresse email valide.', errAge18:"L'inscription est réservée aux 18 ans et plus. Cochez la case de confirmation.", errEmailTaken:'Un compte avec cet email existe déjà.', regSuccess:(n,c)=>`Compte créé, ${n}. Votre code de connexion est ${c} — conservez-le puis connectez-vous avec.`, errCode:'Entrez le code.', errCodeNotFound:'Aucun compte trouvé avec ce code.', adminName:'Admin', adminEyebrow:'Admin', adminTitle:'Gestion', connStatusH:'État de la connexion', connStatusWarn:'La connexion au serveur est actuellement instable. Les comptes créés maintenant peuvent ne pas être sauvegardés/synchronisés sur d\'autres appareils.', createAcctH:'Créer un nouveau compte', playerNameLabel:'Nom du joueur', playerNamePh:'ex. : Hasmik', startPointsLabel:'Points de départ (jetons)', createAcctBtn:'Créer le compte', accountsH:(n)=>`Comptes (${n})`, noAccounts:'Aucun compte pour le moment', codeLabel:'code', editBtn:'Modifier', historyH:'Historique des parties', noGames:'Aucune partie terminée pour le moment', draw:'Match nul', wonPrefix:'Gagné : ', logoutBtn:'Se déconnecter', acctConfirmed:(n,c)=>`✅ Compte créé et sauvegarde confirmée. Le code de ${n} est ${c} — transmettez-le.`, acctUnconfirmed:'⚠️ Le compte a été créé localement mais non confirmé sur le serveur. Appuyez sur « Vérifier la connexion » et réessayez, sinon le joueur ne pourra pas se connecter avec ce code.', acctFailed:'⚠️ En raison d\'un problème de connexion, le compte n\'a probablement PAS été sauvegardé. Appuyez sur « Vérifier la connexion » dans un instant et réessayez.', adjustPrompt:(n,p)=>`Nouveau solde de ${n} (actuellement : ${p})`, tabPlay:'Jouer', tabRequests:'Invitations', tabHistory:'Historique', currentGamesH:'Parties en cours', openBtn:'Ouvrir', openChallengesH:'Défis ouverts', zeroPtsWarn:'Votre solde est de 0 jeton. Contactez l\'admin avant de pouvoir jouer avec mise.', yourInvite:'Votre défi', waitingPlayer:'en attente d\'un joueur', cancelBtn:'Annuler', noOtherOpen:'Aucun autre défi ouvert pour le moment', playBtn:'Jouer', createOpenBtn:'+ Créer un défi ouvert', gameTypeLabel:'Type de jeu', chess:'Échecs', checkers:'Dames', wagerLabel:'Mise (jetons)', wagerLabelEach:'Mise (jetons, chacun)', publishBtn:'Publier le défi', challengeSpecificH:'Défier un joueur spécifique', noOtherAccounts:'Aucun autre compte pour le moment', zeroPtsCantPlay:'0 jeton · ne peut pas jouer', inviteBtn:'Défier', sendInviteBtn:(n)=>`Envoyer un défi à ${n}`, errValidWager:'Entrez une mise valide.', errNotEnough:'Vous n\'avez pas assez de points pour cette mise.', errOppNotEnough:(n)=>`${n} n'a pas assez de points.`, errInviteGone:'Ce défi n\'est plus disponible.', errWagerBoth:'Points insuffisants pour cette mise (les vôtres ou ceux de l\'autre joueur).', receivedInvitesH:'Invitations reçues', noInvites:'Aucune invitation', acceptBtn:'Accepter', declineBtn:'Refuser', sentInvitesH:'Invitations envoyées', noPendingInvites:'Aucune invitation en attente', pendingLabel:'en attente', myGamesH:'Mes parties', noFinishedGames:'Aucune partie terminée pour le moment', vs:'vs', gameOverH:'Partie terminée', wagerReturned:'La mise a été remboursée.', ptsTransferred:(w)=>`${w} jetons transférés`, returnBtn:'Retour', yourTurn:'C\'est votre tour', oppTurn:(n)=>`Tour de ${n}`, closeGameBtn:'Fermer (la partie continue)', langLabel:'Langue', points:'jetons' },
+tr:{ clubWord:'KULÜP', eyebrow:'Chess & Checkers Club', loginSub:'Kişisel kodunuzla giriş yapın', registerSub:'Yeni hesap oluştur', tabLogin:'Giriş', tabRegister:'Kayıt ol', loginHeading:'Giriş', connIssue:'Geçici bir bağlantı sorunu var.', retryConn:'Bağlantıyı tekrar dene', loginCodeLabel:'Giriş kodu', loginCodePh:'örn: K7X29Q', loginBtn:'Giriş yap', noAccountFooter:'Hesabınız yok mu? "Kayıt ol"a dokunun', registerHeading:'Yeni hesap kaydı', nameLabel:'Ad', namePh:'adınız', emailLabel:'Email', age18Label:'18 yaşında veya daha büyük olduğumu onaylıyorum', registerBtn:'Hesap oluştur', registerFooter:'Hesap 0 puanla başlar — bahisle oynayabilmeniz için admin puan eklemelidir', errName:'Adınızı girin.', errEmail:'Geçerli bir email adresi girin.', errAge18:'Kayıt sadece 18 yaş ve üzeri için geçerlidir. Onay kutusunu işaretleyin.', errEmailTaken:'Bu email ile zaten bir hesap kayıtlı.', regSuccess:(n,c)=>`Hesap oluşturuldu, ${n}. Giriş kodunuz: ${c} — saklayın ve bununla giriş yapın.`, errCode:'Kodu girin.', errCodeNotFound:'Bu kodla hesap bulunamadı.', adminName:'Admin', adminEyebrow:'Admin', adminTitle:'Yönetim', connStatusH:'Bağlantı durumu', connStatusWarn:'Sunucu bağlantısı şu anda dengesiz. Şimdi oluşturulan hesaplar diğer cihazlarla kaydedilmeyebilir/senkronize olmayabilir.', createAcctH:'Yeni hesap oluştur', playerNameLabel:'Oyuncu adı', playerNamePh:'örn: Hasmik', startPointsLabel:'Başlangıç puanı (jeton)', createAcctBtn:'Hesap oluştur', accountsH:(n)=>`Hesaplar (${n})`, noAccounts:'Henüz hesap yok', codeLabel:'kod', editBtn:'Düzenle', historyH:'Oyun geçmişi', noGames:'Henüz biten oyun yok', draw:'Berabere', wonPrefix:'Kazanan: ', logoutBtn:'Çıkış yap', acctConfirmed:(n,c)=>`✅ Hesap oluşturuldu ve kaydı onaylandı. ${n} kodu: ${c} — iletin.`, acctUnconfirmed:'⚠️ Hesap yerel olarak oluşturuldu ancak sunucuda onaylanmadı. "Bağlantıyı kontrol et"e dokunup tekrar deneyin, aksi halde oyuncu bu kodla giriş yapamaz.', acctFailed:'⚠️ Bağlantı sorunu nedeniyle hesap muhtemelen kaydedilmedi. Bir süre sonra "Bağlantıyı kontrol et"e dokunup tekrar deneyin.', adjustPrompt:(n,p)=>`${n} için yeni puan (şu an: ${p})`, tabPlay:'Oyna', tabRequests:'Davetler', tabHistory:'Geçmiş', currentGamesH:'Devam eden oyunlar', openBtn:'Aç', openChallengesH:'Açık meydan okumalar', zeroPtsWarn:'Hesabınızda 0 jeton var. Bahisle oynayabilmeniz için admin ile görüşün.', yourInvite:'Meydan okumanız', waitingPlayer:'oyuncu bekleniyor', cancelBtn:'İptal', noOtherOpen:'Henüz başka açık meydan okuma yok', playBtn:'Oyna', createOpenBtn:'+ Açık meydan okuma oluştur', gameTypeLabel:'Oyun türü', chess:'Satranç', checkers:'Dama', wagerLabel:'Bahis (jeton)', wagerLabelEach:'Bahis (jeton, kişi başı)', publishBtn:'Meydan okumayı yayınla', challengeSpecificH:'Belirli bir oyuncuya meydan oku', noOtherAccounts:'Henüz başka hesap yok', zeroPtsCantPlay:'0 jeton · oynayamaz', inviteBtn:'Meydan oku', sendInviteBtn:(n)=>`${n} kişisine meydan okuma gönder`, errValidWager:'Geçerli bir bahis girin.', errNotEnough:'Bu bahis için yeterli puanınız yok.', errOppNotEnough:(n)=>`${n} yeterli puana sahip değil.`, errInviteGone:'Bu meydan okuma artık mevcut değil.', errWagerBoth:'Bu bahis için yeterli puan yok (sizin veya diğer oyuncunun).', receivedInvitesH:'Alınan davetler', noInvites:'Davet yok', acceptBtn:'Kabul et', declineBtn:'Reddet', sentInvitesH:'Gönderilen davetler', noPendingInvites:'Bekleyen davet yok', pendingLabel:'beklemede', myGamesH:'Oyunlarım', noFinishedGames:'Henüz biten oyun yok', vs:'vs', gameOverH:'Oyun bitti', wagerReturned:'Bahis iade edildi.', ptsTransferred:(w)=>`${w} jeton aktarıldı`, returnBtn:'Geri', yourTurn:'Sıra sizde', oppTurn:(n)=>`Sıra ${n} kişisinde`, closeGameBtn:'Kapat (oyun devam ediyor)', langLabel:'Dil', points:'jeton' },
+fa:{ clubWord:'باشگاه', eyebrow:'Chess & Checkers Club', loginSub:'با کد شخصی خود وارد شوید', registerSub:'ایجاد حساب جدید', tabLogin:'ورود', tabRegister:'ثبت‌نام', loginHeading:'ورود', connIssue:'مشکل موقتی در اتصال وجود دارد.', retryConn:'بررسی مجدد اتصال', loginCodeLabel:'کد ورود', loginCodePh:'مثلاً: K7X29Q', loginBtn:'ورود', noAccountFooter:'حساب ندارید؟ روی «ثبت‌نام» بزنید', registerHeading:'ثبت‌نام حساب جدید', nameLabel:'نام', namePh:'نام شما', emailLabel:'ایمیل', age18Label:'تأیید می‌کنم که ۱۸ سال یا بیشتر دارم', registerBtn:'ایجاد حساب', registerFooter:'حساب با ۰ امتیاز شروع می‌شود — قبل از بازی با شرط‌بندی، مدیر باید امتیاز اضافه کند', errName:'نام خود را وارد کنید.', errEmail:'یک آدرس ایمیل معتبر وارد کنید.', errAge18:'ثبت‌نام فقط برای افراد ۱۸ سال به بالا امکان‌پذیر است. لطفاً تیک تأیید را بزنید.', errEmailTaken:'حسابی با این ایمیل قبلاً ثبت شده است.', regSuccess:(n,c)=>`حساب ایجاد شد، ${n}. کد ورود شما ${c} است — آن را ذخیره کرده و با آن وارد شوید.`, errCode:'کد را وارد کنید.', errCodeNotFound:'حسابی با این کد یافت نشد.', adminName:'مدیر', adminEyebrow:'مدیر', adminTitle:'مدیریت', connStatusH:'وضعیت اتصال', connStatusWarn:'اتصال به سرور در حال حاضر ناپایدار است. حساب‌های ایجادشده اکنون ممکن است ذخیره/همگام‌سازی نشوند.', createAcctH:'ایجاد حساب جدید', playerNameLabel:'نام بازیکن', playerNamePh:'مثلاً: هاسمیک', startPointsLabel:'امتیاز اولیه (ژتون)', createAcctBtn:'ایجاد حساب', accountsH:(n)=>`حساب‌ها (${n})`, noAccounts:'هنوز حسابی وجود ندارد', codeLabel:'کد', editBtn:'ویرایش', historyH:'تاریخچه بازی‌ها', noGames:'هنوز بازی‌ای تمام نشده است', draw:'مساوی', wonPrefix:'برنده: ', logoutBtn:'خروج', acctConfirmed:(n,c)=>`✅ حساب ایجاد و ذخیره آن تأیید شد. کد ${n}: ${c} — به او بدهید.`, acctUnconfirmed:'⚠️ حساب به‌صورت محلی ایجاد شد اما در سرور تأیید نشد. روی «بررسی اتصال» بزنید و دوباره امتحان کنید، در غیر این صورت بازیکن نمی‌تواند با این کد وارد شود.', acctFailed:'⚠️ به دلیل مشکل اتصال، حساب احتمالاً ذخیره نشده است. کمی بعد روی «بررسی اتصال» بزنید و دوباره امتحان کنید.', adjustPrompt:(n,p)=>`امتیاز جدید ${n} (اکنون: ${p})`, tabPlay:'بازی', tabRequests:'دعوت‌ها', tabHistory:'تاریخچه', currentGamesH:'بازی‌های جاری', openBtn:'باز کردن', openChallengesH:'چالش‌های باز', zeroPtsWarn:'موجودی شما ۰ ژتون است. قبل از بازی با شرط‌بندی با مدیر تماس بگیرید.', yourInvite:'چالش شما', waitingPlayer:'در انتظار بازیکن', cancelBtn:'لغو', noOtherOpen:'هنوز چالش باز دیگری وجود ندارد', playBtn:'بازی', createOpenBtn:'+ ایجاد چالش باز', gameTypeLabel:'نوع بازی', chess:'شطرنج', checkers:'داما', wagerLabel:'شرط (ژتون)', wagerLabelEach:'شرط (ژتون، هرکدام)', publishBtn:'انتشار چالش', challengeSpecificH:'به‌چالش‌کشیدن بازیکن خاص', noOtherAccounts:'هنوز حساب دیگری وجود ندارد', zeroPtsCantPlay:'۰ ژتون · نمی‌تواند بازی کند', inviteBtn:'به چالش دعوت کن', sendInviteBtn:(n)=>`ارسال چالش به ${n}`, errValidWager:'یک شرط معتبر وارد کنید.', errNotEnough:'امتیاز کافی برای این شرط ندارید.', errOppNotEnough:(n)=>`${n} امتیاز کافی ندارد.`, errInviteGone:'این چالش دیگر در دسترس نیست.', errWagerBoth:'امتیاز کافی برای این شرط وجود ندارد (شما یا بازیکن دیگر).', receivedInvitesH:'دعوت‌های دریافتی', noInvites:'دعوتی وجود ندارد', acceptBtn:'پذیرفتن', declineBtn:'رد کردن', sentInvitesH:'دعوت‌های ارسالی', noPendingInvites:'دعوت در انتظاری وجود ندارد', pendingLabel:'در انتظار', myGamesH:'بازی‌های من', noFinishedGames:'هنوز بازی تمام‌شده‌ای وجود ندارد', vs:'vs', gameOverH:'بازی تمام شد', wagerReturned:'شرط بازگردانده شد.', ptsTransferred:(w)=>`${w} ژتون منتقل شد`, returnBtn:'بازگشت', yourTurn:'نوبت شماست', oppTurn:(n)=>`نوبت ${n}`, closeGameBtn:'بستن (بازی ادامه دارد)', langLabel:'زبان', points:'ژتون' },
+ka:{ clubWord:'კლუბი', eyebrow:'Chess & Checkers Club', loginSub:'შედით თქვენი პირადი კოდით', registerSub:'ახალი ანგარიშის შექმნა', tabLogin:'შესვლა', tabRegister:'რეგისტრაცია', loginHeading:'შესვლა', connIssue:'დროებითი კავშირის პრობლემაა.', retryConn:'კავშირის ხელახლა შემოწმება', loginCodeLabel:'შესვლის კოდი', loginCodePh:'მაგ.: K7X29Q', loginBtn:'შესვლა', noAccountFooter:'არ გაქვთ ანგარიში? დააჭირეთ „რეგისტრაცია“-ს', registerHeading:'ახალი ანგარიშის რეგისტრაცია', nameLabel:'სახელი', namePh:'თქვენი სახელი', emailLabel:'Email', age18Label:'ვადასტურებ, რომ 18 წლის ან მეტი ვარ', registerBtn:'ანგარიშის შექმნა', registerFooter:'ანგარიში იწყება 0 ქულით — ადმინმა უნდა დაამატოს ქულები სანამ ფსონზე ითამაშებთ', errName:'შეიყვანეთ სახელი.', errEmail:'შეიყვანეთ სწორი email მისამართი.', errAge18:'რეგისტრაცია ხელმისაწვდომია მხოლოდ 18+ ასაკის პირებისთვის. მონიშნეთ დადასტურების ველი.', errEmailTaken:'ამ email-ით ანგარიში უკვე დარეგისტრირებულია.', regSuccess:(n,c)=>`ანგარიში შეიქმნა, ${n}. თქვენი შესვლის კოდია ${c} — შეინახეთ და შედით მისით.`, errCode:'შეიყვანეთ კოდი.', errCodeNotFound:'ამ კოდით ანგარიში ვერ მოიძებნა.', adminName:'ადმინი', adminEyebrow:'ადმინი', adminTitle:'მართვა', connStatusH:'კავშირის სტატუსი', connStatusWarn:'სერვერთან კავშირი ამჟამად არასტაბილურია. ახლა შექმნილი ანგარიშები შესაძლოა არ შეინახოს/სინქრონიზდეს სხვა მოწყობილობებთან.', createAcctH:'ახალი ანგარიშის შექმნა', playerNameLabel:'მოთამაშის სახელი', playerNamePh:'მაგ.: ჰასმიკ', startPointsLabel:'საწყისი ქულები (ჟეტონი)', createAcctBtn:'ანგარიშის შექმნა', accountsH:(n)=>`ანგარიშები (${n})`, noAccounts:'ჯერ არ არის ანგარიშები', codeLabel:'კოდი', editBtn:'რედაქტირება', historyH:'თამაშების ისტორია', noGames:'ჯერ არცერთი თამაში არ დასრულებულა', draw:'ფრედი', wonPrefix:'გაიმარჯვა: ', logoutBtn:'გამოსვლა', acctConfirmed:(n,c)=>`✅ ანგარიში შეიქმნა და შენახვა დადასტურდა. ${n}-ის კოდია ${c} — გადაეცით.`, acctUnconfirmed:'⚠️ ანგარიში შეიქმნა ლოკალურად, მაგრამ სერვერზე ვერ დადასტურდა. დააჭირეთ „კავშირის შემოწმებას“ და სცადეთ ხელახლა.', acctFailed:'⚠️ კავშირის პრობლემის გამო ანგარიში ალბათ არ შენახულა. ცოტა ხანში დააჭირეთ „კავშირის შემოწმებას“ და სცადეთ ხელახლა.', adjustPrompt:(n,p)=>`${n}-ის ახალი ქულები (ახლა: ${p})`, tabPlay:'თამაში', tabRequests:'მოწვევები', tabHistory:'ისტორია', currentGamesH:'მიმდინარე თამაშები', openBtn:'გახსნა', openChallengesH:'ღია გამოწვევები', zeroPtsWarn:'თქვენს ანგარიშზე 0 ჟეტონია. ფსონზე თამაშამდე მიმართეთ ადმინს.', yourInvite:'თქვენი გამოწვევა', waitingPlayer:'ელოდება მოთამაშეს', cancelBtn:'გაუქმება', noOtherOpen:'სხვა ღია გამოწვევები ჯერ არ არის', playBtn:'თამაში', createOpenBtn:'+ ღია გამოწვევის შექმნა', gameTypeLabel:'თამაშის ტიპი', chess:'ჭადრაკი', checkers:'დამა', wagerLabel:'ფსონი (ჟეტონი)', wagerLabelEach:'ფსონი (ჟეტონი, თითოეულს)', publishBtn:'გამოწვევის გამოქვეყნება', challengeSpecificH:'კონკრეტული მოთამაშის გამოწვევა', noOtherAccounts:'სხვა ანგარიშები ჯერ არ არის', zeroPtsCantPlay:'0 ჟეტონი · ვერ თამაშობს', inviteBtn:'გამოწვევა', sendInviteBtn:(n)=>`გამოწვევის გაგზავნა ${n}-სთვის`, errValidWager:'შეიყვანეთ სწორი ფსონი.', errNotEnough:'თქვენ არ გაქვთ საკმარისი ქულები ამ ფსონისთვის.', errOppNotEnough:(n)=>`${n}-ს არ აქვს საკმარისი ქულები.`, errInviteGone:'ეს გამოწვევა აღარ არის ხელმისაწვდომი.', errWagerBoth:'საკმარისი ქულები არ არის ამ ფსონისთვის (თქვენი ან მეორე მოთამაშის).', receivedInvitesH:'მიღებული მოწვევები', noInvites:'მოწვევები არ არის', acceptBtn:'მიღება', declineBtn:'უარყოფა', sentInvitesH:'გაგზავნილი მოწვევები', noPendingInvites:'მოლოდინში მოწვევები არ არის', pendingLabel:'მოლოდინში', myGamesH:'ჩემი თამაშები', noFinishedGames:'ჯერ არცერთი დასრულებული თამაში არ არის', vs:'vs', gameOverH:'თამაში დასრულდა', wagerReturned:'ფსონი დაბრუნდა.', ptsTransferred:(w)=>`გადაირიცხა ${w} ჟეტონი`, returnBtn:'უკან', yourTurn:'თქვენი სვლაა', oppTurn:(n)=>`${n}-ის სვლაა`, closeGameBtn:'დახურვა (თამაში გრძელდება)', langLabel:'ენა', points:'ჟეტონი' },
+az:{ clubWord:'KLUB', eyebrow:'Chess & Checkers Club', loginSub:'Şəxsi kodunuzla daxil olun', registerSub:'Yeni hesab yarat', tabLogin:'Giriş', tabRegister:'Qeydiyyat', loginHeading:'Giriş', connIssue:'Müvəqqəti bağlantı problemi var.', retryConn:'Bağlantını yenidən yoxla', loginCodeLabel:'Giriş kodu', loginCodePh:'məs: K7X29Q', loginBtn:'Daxil ol', noAccountFooter:'Hesabınız yoxdur? "Qeydiyyat"a toxunun', registerHeading:'Yeni hesab qeydiyyatı', nameLabel:'Ad', namePh:'adınız', emailLabel:'Email', age18Label:'18 yaşında və ya böyük olduğumu təsdiq edirəm', registerBtn:'Hesab yarat', registerFooter:'Hesab 0 xalla başlayır — mərcə oynamazdan əvvəl admin xal əlavə etməlidir', errName:'Adınızı daxil edin.', errEmail:'Düzgün email ünvanı daxil edin.', errAge18:'Qeydiyyat yalnız 18+ yaşlı şəxslər üçün mümkündür. Təsdiq qutusunu işarələyin.', errEmailTaken:'Bu email ilə hesab artıq qeydiyyatdan keçib.', regSuccess:(n,c)=>`Hesab yaradıldı, ${n}. Giriş kodunuz: ${c} — saxlayın və onunla daxil olun.`, errCode:'Kodu daxil edin.', errCodeNotFound:'Bu kodla hesab tapılmadı.', adminName:'Admin', adminEyebrow:'Admin', adminTitle:'İdarəetmə', connStatusH:'Bağlantı statusu', connStatusWarn:'Server bağlantısı hazırda qeyri-sabitdir. İndi yaradılan hesablar digər cihazlarda saxlanmaya/sinxronlaşmaya bilər.', createAcctH:'Yeni hesab yarat', playerNameLabel:'Oyunçu adı', playerNamePh:'məs: Hasmik', startPointsLabel:'Başlanğıc xal (jeton)', createAcctBtn:'Hesab yarat', accountsH:(n)=>`Hesablar (${n})`, noAccounts:'Hələ hesab yoxdur', codeLabel:'kod', editBtn:'Redaktə et', historyH:'Oyun tarixçəsi', noGames:'Hələ bitmiş oyun yoxdur', draw:'Bərabərə', wonPrefix:'Qalib: ', logoutBtn:'Çıxış', acctConfirmed:(n,c)=>`✅ Hesab yaradıldı və saxlanması təsdiqləndi. ${n} kodu: ${c} — ötürün.`, acctUnconfirmed:'⚠️ Hesab yerli olaraq yaradıldı, lakin serverdə təsdiqlənmədi. "Bağlantını yoxla"ya toxunub yenidən cəhd edin, əks halda oyunçu bu kodla daxil ola bilməyəcək.', acctFailed:'⚠️ Bağlantı problemi səbəbindən hesab çox güman ki saxlanılmadı. Bir az sonra "Bağlantını yoxla"ya toxunub yenidən cəhd edin.', adjustPrompt:(n,p)=>`${n} üçün yeni xal (indi: ${p})`, tabPlay:'Oyna', tabRequests:'Dəvətlər', tabHistory:'Tarixçə', currentGamesH:'Davam edən oyunlar', openBtn:'Aç', openChallengesH:'Açıq çağırışlar', zeroPtsWarn:'Hesabınızda 0 jeton var. Mərcə oynamazdan əvvəl admin ilə əlaqə saxlayın.', yourInvite:'Sizin çağırışınız', waitingPlayer:'oyunçu gözlənilir', cancelBtn:'Ləğv et', noOtherOpen:'Hələ başqa açıq çağırış yoxdur', playBtn:'Oyna', createOpenBtn:'+ Açıq çağırış yarat', gameTypeLabel:'Oyun növü', chess:'Şahmat', checkers:'Dama', wagerLabel:'Mərc (jeton)', wagerLabelEach:'Mərc (jeton, hər biri)', publishBtn:'Çağırışı dərc et', challengeSpecificH:'Konkret oyunçuya meydan oxu', noOtherAccounts:'Hələ başqa hesab yoxdur', zeroPtsCantPlay:'0 jeton · oynaya bilməz', inviteBtn:'Meydan oxu', sendInviteBtn:(n)=>`${n}-ə çağırış göndər`, errValidWager:'Düzgün mərc daxil edin.', errNotEnough:'Bu mərc üçün kifayət qədər xalınız yoxdur.', errOppNotEnough:(n)=>`${n}-in kifayət qədər xalı yoxdur.`, errInviteGone:'Bu çağırış artıq mövcud deyil.', errWagerBoth:'Bu mərc üçün kifayət qədər xal yoxdur (sizin və ya digər oyunçunun).', receivedInvitesH:'Alınan dəvətlər', noInvites:'Dəvət yoxdur', acceptBtn:'Qəbul et', declineBtn:'Rədd et', sentInvitesH:'Göndərilən dəvətlər', noPendingInvites:'Gözləyən dəvət yoxdur', pendingLabel:'gözləmədə', myGamesH:'Mənim oyunlarım', noFinishedGames:'Hələ bitmiş oyun yoxdur', vs:'vs', gameOverH:'Oyun bitdi', wagerReturned:'Mərc geri qaytarıldı.', ptsTransferred:(w)=>`${w} jeton köçürüldü`, returnBtn:'Geri', yourTurn:'Sizin növbənizdir', oppTurn:(n)=>`${n}-in növbəsidir`, closeGameBtn:'Bağla (oyun davam edir)', langLabel:'Dil', points:'jeton' },
+uz:{ clubWord:'KLUB', eyebrow:'Chess & Checkers Club', loginSub:'Shaxsiy kodingiz bilan kiring', registerSub:'Yangi hisob yaratish', tabLogin:'Kirish', tabRegister:'Roʻyxatdan oʻtish', loginHeading:'Kirish', connIssue:'Vaqtinchalik ulanish muammosi bor.', retryConn:'Ulanishni qayta tekshirish', loginCodeLabel:'Kirish kodi', loginCodePh:'masalan: K7X29Q', loginBtn:'Kirish', noAccountFooter:'Hisobingiz yoʻqmi? "Roʻyxatdan oʻtish"ni bosing', registerHeading:'Yangi hisob roʻyxatdan oʻtkazish', nameLabel:'Ism', namePh:'ismingiz', emailLabel:'Email', age18Label:'18 yoshda yoki undan katta ekanligimni tasdiqlayman', registerBtn:'Hisob yaratish', registerFooter:'Hisob 0 ball bilan boshlanadi — pul tikib oʻynashdan oldin admin ball qoʻshishi kerak', errName:'Ismingizni kiriting.', errEmail:'Toʻgʻri email manzil kiriting.', errAge18:'Roʻyxatdan oʻtish faqat 18 yosh va undan katta shaxslar uchun. Tasdiqlash katagini belgilang.', errEmailTaken:'Bu email bilan hisob allaqachon roʻyxatdan oʻtgan.', regSuccess:(n,c)=>`Hisob yaratildi, ${n}. Kirish kodingiz: ${c} — saqlab qoʻying va u bilan kiring.`, errCode:'Kodni kiriting.', errCodeNotFound:'Bu kod bilan hisob topilmadi.', adminName:'Admin', adminEyebrow:'Admin', adminTitle:'Boshqaruv', connStatusH:'Ulanish holati', connStatusWarn:'Server bilan ulanish hozir beqaror. Hozir yaratilgan hisoblar boshqa qurilmalarda saqlanmasligi/sinxronlanmasligi mumkin.', createAcctH:'Yangi hisob yaratish', playerNameLabel:'Oʻyinchi ismi', playerNamePh:'masalan: Hasmik', startPointsLabel:'Boshlangʻich ball (jeton)', createAcctBtn:'Hisob yaratish', accountsH:(n)=>`Hisoblar (${n})`, noAccounts:'Hozircha hisoblar yoʻq', codeLabel:'kod', editBtn:'Tahrirlash', historyH:'Oʻyinlar tarixi', noGames:'Hali tugagan oʻyin yoʻq', draw:'Durrang', wonPrefix:'Gʻolib: ', logoutBtn:'Chiqish', acctConfirmed:(n,c)=>`✅ Hisob yaratildi va saqlanishi tasdiqlandi. ${n} kodi: ${c} — uzating.`, acctUnconfirmed:'⚠️ Hisob mahalliy tarzda yaratildi, lekin serverda tasdiqlanmadi. "Ulanishni tekshirish"ni bosib qayta urinib koʻring, aks holda oʻyinchi bu kod bilan kira olmaydi.', acctFailed:'⚠️ Ulanish muammosi tufayli hisob, ehtimol, saqlanmadi. Bir ozdan keyin "Ulanishni tekshirish"ni bosib qayta urinib koʻring.', adjustPrompt:(n,p)=>`${n} uchun yangi ball (hozir: ${p})`, tabPlay:'Oʻynash', tabRequests:'Takliflar', tabHistory:'Tarix', currentGamesH:'Davom etayotgan oʻyinlar', openBtn:'Ochish', openChallengesH:'Ochiq chaqiriqlar', zeroPtsWarn:'Hisobingizda 0 jeton bor. Pul tikib oʻynashdan oldin admin bilan bogʻlaning.', yourInvite:'Sizning chaqiriqingiz', waitingPlayer:'oʻyinchi kutilmoqda', cancelBtn:'Bekor qilish', noOtherOpen:'Hozircha boshqa ochiq chaqiriq yoʻq', playBtn:'Oʻynash', createOpenBtn:'+ Ochiq chaqiriq yaratish', gameTypeLabel:'Oʻyin turi', chess:'Shaxmat', checkers:'Shashka', wagerLabel:'Pul tikish (jeton)', wagerLabelEach:'Pul tikish (jeton, har biridan)', publishBtn:'Chaqiriqni eʼlon qilish', challengeSpecificH:'Muayyan oʻyinchiga chaqiriq yuborish', noOtherAccounts:'Hozircha boshqa hisob yoʻq', zeroPtsCantPlay:'0 jeton · oʻynay olmaydi', inviteBtn:'Chaqirish', sendInviteBtn:(n)=>`${n}ga chaqiriq yuborish`, errValidWager:'Toʻgʻri pul tikish miqdorini kiriting.', errNotEnough:'Bu pul tikish uchun yetarli balingiz yoʻq.', errOppNotEnough:(n)=>`${n}da yetarli ball yoʻq.`, errInviteGone:'Bu chaqiriq endi mavjud emas.', errWagerBoth:'Bu pul tikish uchun yetarli ball yoʻq (sizda yoki boshqa oʻyinchida).', receivedInvitesH:'Qabul qilingan takliflar', noInvites:'Takliflar yoʻq', acceptBtn:'Qabul qilish', declineBtn:'Rad etish', sentInvitesH:'Yuborilgan takliflar', noPendingInvites:'Kutilayotgan takliflar yoʻq', pendingLabel:'kutilmoqda', myGamesH:'Mening oʻyinlarim', noFinishedGames:'Hali tugagan oʻyin yoʻq', vs:'vs', gameOverH:'Oʻyin tugadi', wagerReturned:'Pul tikish qaytarildi.', ptsTransferred:(w)=>`${w} jeton oʻtkazildi`, returnBtn:'Orqaga', yourTurn:'Sizning navbatingiz', oppTurn:(n)=>`${n}ning navbati`, closeGameBtn:'Yopish (oʻyin davom etadi)', langLabel:'Til', points:'jeton' }
+};
+function t(key){
+  const v = (T[lang] && T[lang][key]!==undefined) ? T[lang][key] : T['hy'][key];
+  return typeof v === 'function' ? v : v;
+}
+function tf(key, ...args){
+  const fn = (T[lang] && T[lang][key]) || T['hy'][key];
+  return typeof fn === 'function' ? fn(...args) : fn;
+}
+function setLang(l){ lang = l; render(); }
+function langSwitcherHtml(){
+  return `<select onchange="setLang(this.value)" style="width:auto;display:inline-block;margin:0;padding:6px 10px;font-size:12px;background:var(--felt-900);border:1px solid var(--line);color:var(--brass-light);border-radius:20px">
+    ${LANGS.map(l=>`<option value="${l.code}" ${l.code===lang?'selected':''}>${l.label}</option>`).join('')}
+  </select>`;
+}
+
+// ---------- chess engine ----------
+const ROOK_DIRS=[[1,0],[-1,0],[0,1],[0,-1]];
+const BISHOP_DIRS=[[1,1],[1,-1],[-1,1],[-1,-1]];
+const QUEEN_DIRS=ROOK_DIRS.concat(BISHOP_DIRS);
+const KNIGHT_OFFS=[[1,2],[2,1],[-1,2],[-2,1],[1,-2],[2,-1],[-1,-2],[-2,-1]];
+function inB(r,c){return r>=0&&r<8&&c>=0&&c<8;}
+function pColor(p){return p?p[0]:null;}
+function pType(p){return p?p[1]:null;}
+function initChessBoard(){
+  const back=['r','n','b','q','k','b','n','r'];
+  const b=Array.from({length:8},()=>Array(8).fill(null));
+  for(let c=0;c<8;c++){
+    b[0][c]='b'+back[c]; b[1][c]='bp';
+    b[7][c]='w'+back[c]; b[6][c]='wp';
+  }
+  return b;
+}
+function cloneBoard(b){return b.map(row=>row.slice());}
+function pseudoMoves(board,r,c){
+  const p=board[r][c]; if(!p) return [];
+  const color=pColor(p), type=pType(p);
+  let moves=[];
+  if(type==='p'){
+    const dir=color==='w'?-1:1;
+    const startRow=color==='w'?6:1;
+    if(inB(r+dir,c) && !board[r+dir][c]){
+      moves.push([r+dir,c]);
+      if(r===startRow && !board[r+2*dir][c]) moves.push([r+2*dir,c]);
+    }
+    for(const dc of [-1,1]){
+      const nr=r+dir,nc=c+dc;
+      if(inB(nr,nc) && board[nr][nc] && pColor(board[nr][nc])!==color) moves.push([nr,nc]);
+    }
+  } else if(type==='n'){
+    for(const [dr,dc] of KNIGHT_OFFS){
+      const nr=r+dr,nc=c+dc;
+      if(inB(nr,nc) && (!board[nr][nc] || pColor(board[nr][nc])!==color)) moves.push([nr,nc]);
+    }
+  } else if(type==='k'){
+    for(const [dr,dc] of QUEEN_DIRS){
+      const nr=r+dr,nc=c+dc;
+      if(inB(nr,nc) && (!board[nr][nc] || pColor(board[nr][nc])!==color)) moves.push([nr,nc]);
+    }
+  } else {
+    const dirs = type==='r'?ROOK_DIRS: type==='b'?BISHOP_DIRS:QUEEN_DIRS;
+    for(const [dr,dc] of dirs){
+      let nr=r+dr,nc=c+dc;
+      while(inB(nr,nc)){
+        if(!board[nr][nc]){ moves.push([nr,nc]); }
+        else { if(pColor(board[nr][nc])!==color) moves.push([nr,nc]); break; }
+        nr+=dr;nc+=dc;
+      }
+    }
+  }
+  return moves;
+}
+function isSquareAttacked(board,tr,tc,byColor){
+  for(let r=0;r<8;r++)for(let c=0;c<8;c++){
+    const p=board[r][c];
+    if(p && pColor(p)===byColor){
+      if(pType(p)==='p'){
+        const dir=byColor==='w'?-1:1;
+        if(r+dir===tr && (c-1===tc||c+1===tc)) return true;
+      } else {
+        if(pseudoMoves(board,r,c).some(([mr,mc])=>mr===tr&&mc===tc)) return true;
+      }
+    }
+  }
+  return false;
+}
+function findKing(board,color){
+  for(let r=0;r<8;r++)for(let c=0;c<8;c++) if(board[r][c]===color+'k') return [r,c];
+  return null;
+}
+function inCheck(board,color){
+  const k=findKing(board,color);
+  if(!k) return false;
+  return isSquareAttacked(board,k[0],k[1],color==='w'?'b':'w');
+}
+function applyChessMove(board,from,to){
+  const nb=cloneBoard(board);
+  const p=nb[from[0]][from[1]];
+  nb[from[0]][from[1]]=null;
+  let piece=p;
+  if(pType(p)==='p' && (to[0]===0||to[0]===7)) piece=pColor(p)+'q';
+  nb[to[0]][to[1]]=piece;
+  return nb;
+}
+function chessLegalMoves(board,r,c){
+  const p=board[r][c]; if(!p) return [];
+  const color=pColor(p);
+  return pseudoMoves(board,r,c).filter(([tr,tc])=>{
+    const nb=applyChessMove(board,[r,c],[tr,tc]);
+    return !inCheck(nb,color);
+  });
+}
+function allChessMoves(board,color){
+  let res=[];
+  for(let r=0;r<8;r++)for(let c=0;c<8;c++){
+    if(board[r][c] && pColor(board[r][c])===color){
+      chessLegalMoves(board,r,c).forEach(m=>res.push({from:[r,c],to:m}));
+    }
+  }
+  return res;
+}
+function chessStatus(board,color){
+  const moves=allChessMoves(board,color);
+  if(moves.length===0) return inCheck(board,color)?'checkmate':'stalemate';
+  return 'ongoing';
+}
+const CHESS_GLYPH={wk:'♔',wq:'♕',wr:'♖',wb:'♗',wn:'♘',wp:'♙',bk:'♚',bq:'♛',br:'♜',bb:'♝',bn:'♞',bp:'♟'};
+
+// ---------- checkers engine ----------
+function initCheckersBoard(){
+  const b=Array.from({length:8},()=>Array(8).fill(null));
+  for(let r=0;r<3;r++)for(let c=0;c<8;c++) if((r+c)%2===1) b[r][c]='bm';
+  for(let r=5;r<8;r++)for(let c=0;c<8;c++) if((r+c)%2===1) b[r][c]='rm';
+  return b;
+}
+function checkersDirs(piece){
+  const color=piece[0], type=piece[1];
+  if(type==='k') return [[1,1],[1,-1],[-1,1],[-1,-1]];
+  return color==='b'? [[1,1],[1,-1]] : [[-1,1],[-1,-1]];
+}
+function checkersCaptures(board,r,c){
+  const p=board[r][c]; if(!p) return [];
+  const color=p[0];
+  const dirs=checkersDirs(p);
+  let moves=[];
+  for(const [dr,dc] of dirs){
+    const mr=r+dr, mc=c+dc, tr=r+2*dr, tc=c+2*dc;
+    if(inB(tr,tc) && board[mr] && board[mr][mc] && board[mr][mc][0]!==color && !board[tr][tc]){
+      moves.push({to:[tr,tc], captured:[mr,mc]});
+    }
+  }
+  return moves;
+}
+function checkersSimple(board,r,c){
+  const p=board[r][c]; if(!p) return [];
+  const dirs=checkersDirs(p);
+  let moves=[];
+  for(const [dr,dc] of dirs){
+    const nr=r+dr,nc=c+dc;
+    if(inB(nr,nc) && !board[nr][nc]) moves.push({to:[nr,nc]});
+  }
+  return moves;
+}
+function allCheckersCaptures(board,color){
+  let res=[];
+  for(let r=0;r<8;r++)for(let c=0;c<8;c++){
+    if(board[r][c] && board[r][c][0]===color){
+      checkersCaptures(board,r,c).forEach(m=>res.push({from:[r,c],...m}));
+    }
+  }
+  return res;
+}
+function allCheckersMoves(board,color){
+  const caps=allCheckersCaptures(board,color);
+  if(caps.length>0) return caps;
+  let res=[];
+  for(let r=0;r<8;r++)for(let c=0;c<8;c++){
+    if(board[r][c] && board[r][c][0]===color){
+      checkersSimple(board,r,c).forEach(m=>res.push({from:[r,c],...m}));
+    }
+  }
+  return res;
+}
+function applyCheckersMove(board,move){
+  const nb=cloneBoard(board);
+  const [fr,fc]=move.from, [tr,tc]=move.to;
+  let piece=nb[fr][fc];
+  nb[fr][fc]=null;
+  if(move.captured) nb[move.captured[0]][move.captured[1]]=null;
+  if(piece[1]==='m'){
+    if((piece[0]==='b' && tr===7) || (piece[0]==='r' && tr===0)) piece=piece[0]+'k';
+  }
+  nb[tr][tc]=piece;
+  return nb;
+}
+
+// ---------- session ----------
+function findUser(code){ return appData.users.find(u=>u.code===code); }
+
+async function refresh(){
+  await loadData(false);
+  const active = document.activeElement;
+  const isTyping = active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.tagName === 'SELECT');
+  if(isTyping){ return; } // don't wipe out what the user is currently typing
+  render();
+}
+
+function startPolling(){
+  if(pollTimer) clearInterval(pollTimer);
+  pollTimer = setInterval(refresh, 3500);
+}
+
+// ---------- render root ----------
+function el(html){ document.getElementById('app').innerHTML = html; }
+
+async function render(){
+  if(!loaded){ el('<div class="empty">Բեռնվում է…</div>'); return; }
+  if(!currentUser){ renderLogin(); return; }
+  if(currentUser.isAdmin){ renderAdmin(); return; }
+  if(currentGameId){ renderGame(); return; }
+  renderUserHome();
+}
+
+// ---------- LOGIN ----------
+let loginError = '';
+let loginNotice = '';
+let loginMode = 'login'; // 'login' | 'register'
+let registerMsg = '';
+function renderLogin(){
+  el(`
+    <div class="brand">
+      <div style="margin-bottom:10px">${langSwitcherHtml()}</div>
+      <div class="eyebrow">${t('eyebrow')}</div>
+      <h1>${t('clubWord')}</h1>
+      <div class="sub">${loginMode==='login' ? t('loginSub') : t('registerSub')}</div>
+    </div>
+    <div class="tabs">
+      <button class="tab ${loginMode==='login'?'active':''}" onclick="setLoginMode('login')">${t('tabLogin')}</button>
+      <button class="tab ${loginMode==='register'?'active':''}" onclick="setLoginMode('register')">${t('tabRegister')}</button>
+    </div>
+    ${loginMode==='login' ? `
+      <div class="card">
+        <h2>${t('loginHeading')}</h2>
+        ${!storageOk ? `<div class="error">${t('connIssue')}<br><button class="btn-ghost btn-small" style="margin-top:8px" onclick="retryConnection()">${t('retryConn')}</button></div>` : ''}
+        ${loginNotice ? `<div class="notice">${loginNotice}</div>` : ''}
+        ${loginError ? `<div class="error">${loginError}</div>` : ''}
+        <label>${t('loginCodeLabel')}</label>
+        <input id="loginCode" placeholder="${t('loginCodePh')}" autocapitalize="characters">
+        <button class="btn-primary" onclick="doLogin()">${t('loginBtn')}</button>
+      </div>
+      <footer>${t('noAccountFooter')}</footer>
+    ` : `
+      <div class="card">
+        <h2>${t('registerHeading')}</h2>
+        ${registerMsg ? `<div class="notice">${registerMsg}</div>` : ''}
+        ${loginError ? `<div class="error">${loginError}</div>` : ''}
+        <label>${t('nameLabel')}</label>
+        <input id="regName" placeholder="${t('namePh')}">
+        <label>${t('emailLabel')}</label>
+        <input id="regEmail" type="email" placeholder="name@example.com">
+        <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:14px">
+          <input type="checkbox" id="regAge18" style="width:auto;margin:3px 0 0 0">
+          <label for="regAge18" style="margin:0;text-transform:none;letter-spacing:normal;font-size:13px;color:var(--ivory)">${t('age18Label')}</label>
+        </div>
+        <button class="btn-primary" onclick="doRegister()">${t('registerBtn')}</button>
+      </div>
+      <footer>${t('registerFooter')}</footer>
+    `}
+  `);
+}
+function setLoginMode(m){ loginMode=m; loginError=''; registerMsg=''; loginNotice=''; render(); }
+async function doRegister(){
+  const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim().toLowerCase();
+  const age18 = document.getElementById('regAge18').checked;
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  if(!name){ loginError=t('errName'); render(); return; }
+  if(!emailOk){ loginError=t('errEmail'); render(); return; }
+  if(!age18){ loginError=t('errAge18'); render(); return; }
+  await loadData(false);
+  if(appData.users.some(u=>u.email===email)){ loginError=t('errEmailTaken'); render(); return; }
+  const code = genCode(6);
+  appData.users.push({ code, name, email, points:0, isAdmin:false, ageConfirmed18:true });
+  await saveData();
+  loginMode='login';
+  loginError='';
+  loginNotice=tf('regSuccess', name, code);
+  render();
+}
+async function doLogin(){
+  alert('DEBUG: կոճակը սեղմվեց, ֆունկցիան աշխատում է');
+  const code = document.getElementById('loginCode').value.trim().toUpperCase();
+  if(!code){ loginError=t('errCode'); render(); return; }
+  if(code === ADMIN_CODE){
+    currentUser = { code, name:t('adminName'), isAdmin:true };
+    loginError='';
+    startPolling();
+    render(); // show the admin panel immediately, don't wait on the network
+    refresh(); // then refresh data in the background
+    return;
+  }
+  // check the locally-cached data first so login is instant even on a slow connection
+  let u = findUser(code);
+  if(u){
+    currentUser = u;
+    loginError='';
+    startPolling();
+    render();
+    refresh(); // sync in the background
+    return;
+  }
+  // not found locally - try a quick network refresh (with a timeout) before giving up
+  await loadData(false);
+  u = findUser(code);
+  if(!u){ loginError=t('errCodeNotFound'); render(); return; }
+  currentUser = u;
+  loginError='';
+  startPolling();
+  render();
+}
+function logout(){
+  currentUser=null; currentGameId=null; selected=null; mustContinueFrom=null;
+  if(pollTimer) clearInterval(pollTimer);
+  render();
+}
+
+// ---------- ADMIN ----------
+let adminMsg = '';
+function renderAdmin(){
+  const users = appData.users;
+  el(`
+    <div class="brand">
+      <div style="margin-bottom:10px">${langSwitcherHtml()}</div>
+      <div class="eyebrow">${t('adminEyebrow')}</div>
+      <h1>${t('adminTitle')}</h1>
+    </div>
+    ${!storageOk ? `
+      <div class="card">
+        <h2>${t('connStatusH')}</h2>
+        <div class="error">${t('connStatusWarn')}</div>
+        <button class="btn-ghost" style="width:100%" onclick="retryConnection()">${t('retryConn')}</button>
+      </div>
+    `:''}
+    <div class="card">
+      <h2>${t('createAcctH')}</h2>
+      ${adminMsg ? `<div class="notice">${adminMsg}</div>` : ''}
+      <label>${t('playerNameLabel')}</label>
+      <input id="newName" placeholder="${t('playerNamePh')}">
+      <label>${t('startPointsLabel')}</label>
+      <input id="newPoints" type="number" value="100" min="0">
+      <button class="btn-primary" onclick="createUser()">${t('createAcctBtn')}</button>
+    </div>
+    <div class="card">
+      <h2>${tf('accountsH', users.length)}</h2>
+      ${users.length===0 ? `<div class="empty">${t('noAccounts')}</div>` : users.map(u=>`
+        <div class="list-item">
+          <div>
+            <div>${u.name}</div>
+            <div class="muted">${t('codeLabel')}: ${u.code}${u.email?' · '+u.email:''}</div>
+          </div>
+          <div style="text-align:right">
+            <div class="tag">${u.points} ${t('points')}</div>
+            <div style="margin-top:6px">
+              <button class="btn-ghost btn-small" onclick="adjustPoints('${u.code}')">${t('editBtn')}</button>
+            </div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="card">
+      <h2>${t('historyH')}</h2>
+      ${appData.history.length===0 ? `<div class="empty">${t('noGames')}</div>` : appData.history.slice().reverse().slice(0,20).map(h=>`
+        <div class="list-item">
+          <div>
+            <div>${h.p1Name} ⚔ ${h.p2Name}</div>
+            <div class="muted">${h.gameType==='chess'?t('chess'):t('checkers')} · ${h.wager} ${t('points')}</div>
+          </div>
+          <div class="tag ${h.winner==='draw'?'':'wager'}">${h.winner==='draw'?t('draw'):t('wonPrefix')+h.winnerName}</div>
+        </div>
+      `).join('')}
+    </div>
+    <button class="btn-ghost" onclick="logout()" style="width:100%">${t('logoutBtn')}</button>
+  `);
+}
+async function createUser(){
+  const name = document.getElementById('newName').value.trim();
+  const pts = parseInt(document.getElementById('newPoints').value,10);
+  if(!name){ return; }
+  const code = genCode(6);
+  appData.users.push({ code, name, points: isNaN(pts)?0:pts, isAdmin:false });
+  await saveData();
+  if(storageOk){
+    // double-check by re-fetching from the server
+    const check = await verifySaved(code);
+    if(check){
+      adminMsg = tf('acctConfirmed', name, code);
+    } else {
+      adminMsg = t('acctUnconfirmed');
+    }
+  } else {
+    adminMsg = t('acctFailed');
+  }
+  render();
+}
+async function verifySaved(code){
+  try{
+    const res = await fetch(`${FIREBASE_DB_URL}/app-data.json`);
+    if(!res.ok) return false;
+    const fresh = await res.json();
+    if(!fresh || !fresh.users) return false;
+    return fresh.users.some(u=>u.code===code);
+  }catch(e){ return false; }
+}
+async function retryConnection(){
+  await loadData(true);
+  render();
+}
+async function adjustPoints(code){
+  const u = findUser(code);
+  const val = prompt(tf('adjustPrompt', u.name, u.points), u.points);
+  if(val===null) return;
+  const n = parseInt(val,10);
+  if(isNaN(n) || n<0) return;
+  u.points = n;
+  await saveData();
+  render();
+}
+
+// ---------- USER HOME ----------
+let userTab = 'play';
+let challengeError = '';
+let pendingOpponent = null;
+function renderUserHome(){
+  currentUser = findUser(currentUser.code) || currentUser; // refresh balance
+  const others = appData.users.filter(u=>u.code!==currentUser.code);
+  const incoming = appData.challenges.filter(c=>c.toCode===currentUser.code && c.status==='pending');
+  const outgoing = appData.challenges.filter(c=>c.fromCode===currentUser.code && c.status==='pending');
+  const active = appData.challenges.filter(c=>c.status==='active' && (c.fromCode===currentUser.code||c.toCode===currentUser.code));
+  const openFromOthers = appData.challenges.filter(c=>c.status==='open' && c.fromCode!==currentUser.code);
+  const myOpen = appData.challenges.filter(c=>c.status==='open' && c.fromCode===currentUser.code);
+  const myHistory = appData.history.filter(h=>h.p1Code===currentUser.code||h.p2Code===currentUser.code).slice().reverse();
+
+  el(`
+    <div class="brand">
+      <div style="margin-bottom:10px">${langSwitcherHtml()}</div>
+      <div class="eyebrow">${t('eyebrow')}</div>
+      <h1>${t('clubWord')}</h1>
+    </div>
+    <div class="balance">
+      <div class="name">${currentUser.name}</div>
+      <div class="points">${currentUser.points}<span>${t('points')}</span></div>
+    </div>
+    <div class="tabs">
+      <button class="tab ${userTab==='play'?'active':''}" onclick="setTab('play')">${t('tabPlay')}</button>
+      <button class="tab ${userTab==='requests'?'active':''}" onclick="setTab('requests')">${t('tabRequests')}${incoming.length?` (${incoming.length})`:''}</button>
+      <button class="tab ${userTab==='history'?'active':''}" onclick="setTab('history')">${t('tabHistory')}</button>
+    </div>
+    ${userTab==='play' ? renderPlayTab(others, active, openFromOthers, myOpen) : ''}
+    ${userTab==='requests' ? renderRequestsTab(incoming, outgoing) : ''}
+    ${userTab==='history' ? renderHistoryTab(myHistory) : ''}
+    <button class="btn-ghost" onclick="logout()" style="width:100%;margin-top:6px">${t('logoutBtn')}</button>
+  `);
+}
+function setTab(t){ userTab=t; challengeError=''; pendingOpponent=null; openChallengeError=''; showOpenForm=false; render(); }
+
+function renderPlayTab(others, active, openFromOthers, myOpen){
+  return `
+    ${active.length>0 ? `
+      <div class="card">
+        <h2>${t('currentGamesH')}</h2>
+        ${active.map(c=>{
+          const oppCode = c.fromCode===currentUser.code ? c.toCode : c.fromCode;
+          const opp = findUser(oppCode);
+          return `<div class="list-item">
+            <div>
+              <div>${opp?opp.name:'—'}</div>
+              <div class="muted">${c.gameType==='chess'?t('chess'):t('checkers')} · ${c.wager} ${t('points')}</div>
+            </div>
+            <button class="btn-primary btn-small" onclick="openGame('${c.id}')">${t('openBtn')}</button>
+          </div>`;
+        }).join('')}
+      </div>
+    `:''}
+
+    <div class="card">
+      <h2>${t('openChallengesH')}</h2>
+      ${currentUser.points<=0 ? `<div class="error">${t('zeroPtsWarn')}</div>` : ''}
+      ${openChallengeError ? `<div class="error">${openChallengeError}</div>` : ''}
+      ${myOpen.length>0 ? myOpen.map(c=>`
+        <div class="list-item">
+          <div>
+            <div>${t('yourInvite')}</div>
+            <div class="muted">${c.gameType==='chess'?t('chess'):t('checkers')} · <span class="tag wager">${c.wager} ${t('points')}</span> · ${t('waitingPlayer')}</div>
+          </div>
+          <button class="btn-ghost btn-small" onclick="cancelChallenge('${c.id}')">${t('cancelBtn')}</button>
+        </div>
+      `).join('') : ''}
+      ${openFromOthers.length===0 ? `<div class="empty">${t('noOtherOpen')}</div>` : openFromOthers.map(c=>`
+        <div class="list-item">
+          <div>
+            <div>${c.fromName}</div>
+            <div class="muted">${c.gameType==='chess'?t('chess'):t('checkers')} · <span class="tag wager">${c.wager} ${t('points')}</span></div>
+          </div>
+          <button class="btn-primary btn-small" ${(currentUser.points<c.wager)?'disabled style="opacity:.4"':''} onclick="joinOpenChallenge('${c.id}')">${t('playBtn')}</button>
+        </div>
+      `).join('')}
+      ${!showOpenForm ? `
+        <button class="btn-ghost" style="width:100%;margin-top:12px" ${currentUser.points<=0?'disabled style="opacity:.4"':''} onclick="toggleOpenForm()">${t('createOpenBtn')}</button>
+      ` : renderOpenChallengeForm()}
+    </div>
+
+    <div class="card">
+      <h2>${t('challengeSpecificH')}</h2>
+      ${challengeError ? `<div class="error">${challengeError}</div>` : ''}
+      ${others.length===0 ? `<div class="empty">${t('noOtherAccounts')}</div>` : others.map(u=>`
+        <div class="list-item">
+          <div>
+            <div>${u.name}</div>
+            ${u.points<=0?`<div class="muted">${t('zeroPtsCantPlay')}</div>`:''}
+          </div>
+          <button class="btn-ghost btn-small" ${(currentUser.points<=0||u.points<=0)?'disabled style="opacity:.4"':''} onclick="startChallenge('${u.code}')">${t('inviteBtn')}</button>
+        </div>
+      `).join('')}
+      ${pendingOpponent ? renderChallengeForm() : ''}
+    </div>
+  `;
+}
+let showOpenForm = false;
+let openChallengeError = '';
+function toggleOpenForm(){ showOpenForm=true; openChallengeError=''; render(); }
+function renderOpenChallengeForm(){
+  return `
+    <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--line)">
+      <label>${t('gameTypeLabel')}</label>
+      <select id="openGameType">
+        <option value="chess">${t('chess')}</option>
+        <option value="checkers">${t('checkers')}</option>
+      </select>
+      <label>${t('wagerLabel')}</label>
+      <input id="openWager" type="number" min="1" value="10">
+      <button class="btn-primary" onclick="createOpenChallenge()">${t('publishBtn')}</button>
+    </div>
+  `;
+}
+async function createOpenChallenge(){
+  const gameType = document.getElementById('openGameType').value;
+  const wager = parseInt(document.getElementById('openWager').value,10);
+  if(!wager || wager<1){ openChallengeError=t('errValidWager'); render(); return; }
+  if(wager > currentUser.points){ openChallengeError=t('errNotEnough'); render(); return; }
+  appData.challenges.push({
+    id: genId(),
+    fromCode: currentUser.code, fromName: currentUser.name,
+    toCode: null, toName: null,
+    wager, gameType, status:'open', createdAt: Date.now()
+  });
+  await saveData();
+  showOpenForm=false;
+  render();
+}
+async function joinOpenChallenge(id){
+  await loadData(false);
+  const c = appData.challenges.find(x=>x.id===id && x.status==='open');
+  if(!c){ openChallengeError=t('errInviteGone'); render(); return; }
+  if(c.fromCode===currentUser.code) return;
+  const host = findUser(c.fromCode);
+  if(!host || currentUser.points < c.wager || host.points < c.wager){
+    openChallengeError=t('errWagerBoth');
+    render();
+    return;
+  }
+  c.toCode = currentUser.code;
+  c.toName = currentUser.name;
+  c.status = 'active';
+  activateChallenge(c);
+  await saveData();
+  render();
+}
+function activateChallenge(c){
+  let board, turn, players;
+  if(c.gameType==='chess'){
+    board = initChessBoard();
+    const swap = Math.random()<0.5;
+    players = swap ? {w:c.toCode,b:c.fromCode} : {w:c.fromCode,b:c.toCode};
+    turn='w';
+  } else {
+    board = initCheckersBoard();
+    const swap = Math.random()<0.5;
+    players = swap ? {b:c.toCode,r:c.fromCode} : {b:c.fromCode,r:c.toCode};
+    turn='b';
+  }
+  appData.games[c.id] = { board, turn, type:c.gameType, players, status:'active', winner:null, mustContinueFrom:null };
+}
+function startChallenge(code){ pendingOpponent = code; challengeError=''; render(); }
+function renderChallengeForm(){
+  const opp = findUser(pendingOpponent);
+  return `
+    <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--line)">
+      <label>${t('gameTypeLabel')}</label>
+      <select id="chGameType">
+        <option value="chess">${t('chess')}</option>
+        <option value="checkers">${t('checkers')}</option>
+      </select>
+      <label>${t('wagerLabelEach')}</label>
+      <input id="chWager" type="number" min="1" value="10">
+      <button class="btn-primary" onclick="sendChallenge('${opp.code}')">${tf('sendInviteBtn', opp.name)}</button>
+    </div>
+  `;
+}
+async function sendChallenge(oppCode){
+  const gameType = document.getElementById('chGameType').value;
+  const wager = parseInt(document.getElementById('chWager').value,10);
+  if(!wager || wager<1){ challengeError=t('errValidWager'); render(); return; }
+  if(wager > currentUser.points){ challengeError=t('errNotEnough'); render(); return; }
+  const opp = findUser(oppCode);
+  if(wager > opp.points){ challengeError=tf('errOppNotEnough', opp.name); render(); return; }
+  appData.challenges.push({
+    id: genId(),
+    fromCode: currentUser.code, fromName: currentUser.name,
+    toCode: oppCode, toName: opp.name,
+    wager, gameType, status:'pending', createdAt: Date.now()
+  });
+  await saveData();
+  pendingOpponent=null;
+  render();
+}
+function renderRequestsTab(incoming, outgoing){
+  return `
+    <div class="card">
+      <h2>${t('receivedInvitesH')}</h2>
+      ${incoming.length===0 ? `<div class="empty">${t('noInvites')}</div>` : incoming.map(c=>`
+        <div class="list-item">
+          <div>
+            <div>${c.fromName}</div>
+            <div class="muted">${c.gameType==='chess'?t('chess'):t('checkers')} · <span class="tag wager">${c.wager} ${t('points')}</span></div>
+          </div>
+          <div class="row" style="max-width:150px">
+            <button class="btn-primary btn-small" onclick="respondChallenge('${c.id}',true)">${t('acceptBtn')}</button>
+            <button class="btn-danger btn-small" onclick="respondChallenge('${c.id}',false)">${t('declineBtn')}</button>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="card">
+      <h2>${t('sentInvitesH')}</h2>
+      ${outgoing.length===0 ? `<div class="empty">${t('noPendingInvites')}</div>` : outgoing.map(c=>`
+        <div class="list-item">
+          <div>
+            <div>${c.toName}</div>
+            <div class="muted">${c.gameType==='chess'?t('chess'):t('checkers')} · ${c.wager} ${t('points')} · ${t('pendingLabel')}</div>
+          </div>
+          <button class="btn-ghost btn-small" onclick="cancelChallenge('${c.id}')">${t('cancelBtn')}</button>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+async function respondChallenge(id, accept){
+  const c = appData.challenges.find(x=>x.id===id);
+  if(!c) return;
+  if(!accept){ c.status='declined'; await saveData(); render(); return; }
+  const p1 = findUser(c.fromCode), p2 = findUser(c.toCode);
+  if(c.wager > p1.points || c.wager > p2.points){
+    c.status='declined';
+    await saveData();
+    render();
+    return;
+  }
+  c.status='active';
+  activateChallenge(c);
+  await saveData();
+  render();
+}
+async function cancelChallenge(id){
+  appData.challenges = appData.challenges.filter(x=>x.id!==id);
+  await saveData();
+  render();
+}
+function renderHistoryTab(history){
+  return `
+    <div class="card">
+      <h2>${t('myGamesH')}</h2>
+      ${history.length===0 ? `<div class="empty">${t('noFinishedGames')}</div>` : history.map(h=>{
+        const won = h.winnerCode===currentUser.code;
+        const isDraw = h.winner==='draw';
+        const oppName = h.p1Code===currentUser.code ? h.p2Name : h.p1Name;
+        return `<div class="list-item">
+          <div>
+            <div>${t('vs')} ${oppName}</div>
+            <div class="muted">${h.gameType==='chess'?t('chess'):t('checkers')} · ${h.wager} ${t('points')}</div>
+          </div>
+          <div class="tag ${isDraw?'':(won?'':'wager')}">${isDraw?t('draw'):(won?'+'+h.wager:'-'+h.wager)}</div>
+        </div>`;
+      }).join('')}
+    </div>
+  `;
+}
+
+// ---------- GAME ----------
+function openGame(challengeId){
+  currentGameId = challengeId;
+  selected=null;
+  render();
+}
+function closeGame(){
+  currentGameId=null; selected=null;
+  render();
+}
+function renderGame(){
+  const c = appData.challenges.find(x=>x.id===currentGameId);
+  const g = appData.games[currentGameId];
+  if(!c || !g){ closeGame(); return; }
+
+  if(g.status==='finished'){
+    const winnerName = g.winner==='draw' ? null : findUser(g.winner)?.name;
+    el(`
+      <div class="brand">
+        <div class="eyebrow">${g.type==='chess'?t('chess'):t('checkers')}</div>
+        <h1>${t('gameOverH')}</h1>
+      </div>
+      <div class="card" style="text-align:center">
+        ${g.winner==='draw'
+          ? `<h2>${t('draw')}</h2><p class="muted">${t('wagerReturned')}</p>`
+          : `<h2>${t('wonPrefix')}${winnerName}</h2><p class="muted">${tf('ptsTransferred', c.wager)}</p>`
+        }
+        <button class="btn-primary" onclick="closeGame()">${t('returnBtn')}</button>
+      </div>
+    `);
+    return;
+  }
+
+  const myColor = g.type==='chess'
+    ? (g.players.w===currentUser.code?'w':'b')
+    : (g.players.b===currentUser.code?'b':'r');
+  const isMyTurn = g.turn===myColor;
+  const oppCode = c.fromCode===currentUser.code?c.toCode:c.fromCode;
+  const oppName = findUser(oppCode)?.name || '—';
+
+  el(`
+    <div class="brand">
+      <div class="eyebrow">${g.type==='chess'?t('chess'):t('checkers')} · ${c.wager} ${t('points')}</div>
+      <h1>${t('vs')} ${oppName}</h1>
+    </div>
+    <div class="turn-banner">${isMyTurn ? t('yourTurn') : tf('oppTurn', oppName)}</div>
+    <div class="board-wrap"><div class="board" id="board"></div></div>
+    <button class="btn-ghost" onclick="closeGame()" style="width:100%">${t('closeGameBtn')}</button>
+  `);
+  drawBoard(g, myColor, isMyTurn);
+}
+
+function drawBoard(g, myColor, isMyTurn){
+  const boardEl = document.getElementById('board');
+  const board = g.board;
+  let legalDest = [];
+  if(selected){
+    if(g.type==='chess') legalDest = chessLegalMoves(board, selected[0], selected[1]);
+    else {
+      const caps = checkersCaptures(board, selected[0], selected[1]);
+      legalDest = caps.length>0 ? caps.map(m=>m.to) : checkersSimple(board, selected[0], selected[1]).map(m=>m.to);
+    }
+  }
+  let html='';
+  for(let r=0;r<8;r++){
+    for(let c=0;c<8;c++){
+      const dark = (r+c)%2===1;
+      const p = board[r][c];
+      const isSel = selected && selected[0]===r && selected[1]===c;
+      const isHint = legalDest.some(([hr,hc])=>hr===r&&hc===c);
+      let inner='';
+      if(g.type==='chess' && p){
+        inner = `<span class="pc-${pColor(p)}">${CHESS_GLYPH[p]}</span>`;
+      } else if(g.type==='checkers' && p){
+        const isKing = p[1]==='k';
+        inner = `<div class="checker-piece ${p[0]==='b'?'black':'red'}">${isKing?'♛':''}</div>`;
+      }
+      html += `<div class="sq ${dark?'dark':'light'} ${isSel?'sel':''} ${isHint && dark? (g.type==='checkers'?'hintcap':'hint'):''}" onclick="squareClick(${r},${c})">${inner}</div>`;
+    }
+  }
+  boardEl.innerHTML = html;
+}
+
+async function squareClick(r,c){
+  const g = appData.games[currentGameId];
+  if(!g || g.status==='finished') return;
+  const myColor = g.type==='chess'
+    ? (g.players.w===currentUser.code?'w':'b')
+    : (g.players.b===currentUser.code?'b':'r');
+  if(g.turn!==myColor) return;
+  if(g.mustContinueFrom){
+    const [fr,fc]=g.mustContinueFrom;
+    if(!(fr===r&&fc===c) && !selected){ return; }
+  }
+
+  const board = g.board;
+  const piece = board[r][c];
+
+  if(g.type==='chess'){
+    if(selected){
+      const legal = chessLegalMoves(board, selected[0], selected[1]);
+      if(legal.some(([lr,lc])=>lr===r&&lc===c)){
+        await makeChessMove(g, selected, [r,c]);
+        selected=null;
+        return;
+      }
+    }
+    if(piece && pColor(piece)===myColor){ selected=[r,c]; render(); }
+    else { selected=null; render(); }
+  } else {
+    const lockedFrom = g.mustContinueFrom;
+    if(lockedFrom){
+      const caps = checkersCaptures(board, lockedFrom[0], lockedFrom[1]);
+      const m = caps.find(m=>m.to[0]===r&&m.to[1]===c);
+      if(m){ await makeCheckersMove(g, {from:lockedFrom, ...m}); }
+      return;
+    }
+    if(selected){
+      const caps = checkersCaptures(board, selected[0], selected[1]);
+      const allCaps = allCheckersCaptures(board, myColor);
+      const options = allCaps.length>0 ? caps : checkersSimple(board, selected[0], selected[1]);
+      const m = options.find(m=>m.to[0]===r&&m.to[1]===c);
+      if(m){ await makeCheckersMove(g, {from:selected, ...m}); selected=null; return; }
+    }
+    if(piece && piece[0]===myColor){
+      const allCaps = allCheckersCaptures(board, myColor);
+      if(allCaps.length>0 && !allCaps.some(m=>m.from[0]===r&&m.from[1]===c)){
+        selected=null; render(); return;
+      }
+      selected=[r,c]; render();
+    } else { selected=null; render(); }
+  }
+}
+
+async function makeChessMove(g, from, to){
+  g.board = applyChessMove(g.board, from, to);
+  const nextColor = g.turn==='w'?'b':'w';
+  const status = chessStatus(g.board, nextColor);
+  g.turn = nextColor;
+  if(status==='checkmate'){
+    const winnerColor = g.turn==='w'?'b':'w';
+    await finishGame(g, g.players[winnerColor]);
+  } else if(status==='stalemate'){
+    await finishGame(g, 'draw');
+  } else {
+    await saveData();
+    render();
+  }
+}
+
+async function makeCheckersMove(g, move){
+  g.board = applyCheckersMove(g.board, move);
+  if(move.captured){
+    const [tr,tc] = move.to;
+    const further = checkersCaptures(g.board, tr, tc);
+    if(further.length>0){
+      g.mustContinueFrom = [tr,tc];
+      selected=[tr,tc];
+      await saveData();
+      render();
+      return;
+    }
+  }
+  g.mustContinueFrom = null;
+  const nextColor = g.turn==='b'?'r':'b';
+  g.turn = nextColor;
+  const moves = allCheckersMoves(g.board, nextColor);
+  if(moves.length===0){
+    const winnerColor = nextColor==='b'?'r':'b';
+    await finishGame(g, g.players[winnerColor]);
+  } else {
+    await saveData();
+    render();
+  }
+}
+
+async function finishGame(g, winnerCodeOrDraw){
+  g.status='finished';
+  g.winner=winnerCodeOrDraw;
+  const c = appData.challenges.find(x=>appData.games[x.id]===g);
+  if(c){
+    c.status='finished';
+    const p1 = findUser(c.fromCode), p2 = findUser(c.toCode);
+    let winnerName=null, winnerCode=null;
+    if(winnerCodeOrDraw!=='draw'){
+      const winner = findUser(winnerCodeOrDraw);
+      const loser = winnerCodeOrDraw===p1.code ? p2 : p1;
+      winner.points += c.wager;
+      loser.points -= c.wager;
+      winnerName = winner.name;
+      winnerCode = winner.code;
+    }
+    appData.history.push({
+      id: genId(), challengeId:c.id, gameType:c.gameType, wager:c.wager,
+      p1Code:p1.code, p1Name:p1.name, p2Code:p2.code, p2Name:p2.name,
+      winner: winnerCodeOrDraw, winnerCode, winnerName, date: Date.now()
+    });
+  }
+  await saveData();
+  render();
+}
+
+// ---------- init ----------
+(async function init(){
+  await loadData(true);
+  if(!storageOk){
+    // transient failure on the very first attempt - wait a moment and try again
+    await new Promise(r=>setTimeout(r,1500));
+    await loadData(true);
+  }
+  render();
+})();
+</script>
+</body>
+</html>
